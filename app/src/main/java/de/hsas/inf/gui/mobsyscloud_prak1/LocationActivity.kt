@@ -14,6 +14,10 @@ import com.google.openlocationcode.OpenLocationCode
 import java.text.SimpleDateFormat
 import java.util.Locale
 import android.util.Log
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
 
 class LocationActivity : AppCompatActivity() {
 
@@ -29,6 +33,11 @@ class LocationActivity : AppCompatActivity() {
     private lateinit var callback: LocationCallback
 
     private  val TAG = "LOC" // fürs logging
+    private var lastLocation: Location? = null
+    private var lastPlusCode: String? = null
+
+    //firestore instanz
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val askPermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -109,20 +118,56 @@ class LocationActivity : AppCompatActivity() {
     }
 
     private fun updateUI(loc: Location) {
+        // letzte Location merken
+        lastLocation = loc
 
-        tvLat.text  = String.format(Locale.getDefault(), "Breite: %.6f", loc.latitude)
-        tvLon.text  = String.format(Locale.getDefault(), "Länge: %.6f",  loc.longitude)
+        tvLat.text = String.format("Breite: %.6f", loc.latitude)
+        tvLon.text = String.format("Länge: %.6f", loc.longitude)
 
         val fmt = SimpleDateFormat("HH:mm:ss (dd.MM.yyyy)", Locale.getDefault())
         tvTime.text = String.format("Zeit: %s", fmt.format(loc.time))
 
         // Plus Code aus Koordinaten berechnen
         val plusCode = OpenLocationCode.encode(loc.latitude, loc.longitude, 10)
+        lastPlusCode = plusCode
         tvPlace.text = "Standort: $plusCode"
 
-        Log.d(
-            TAG,
-            "updateUI: PlusCode=$plusCode"
-        )
+        Log.d(TAG, "updateUI: PlusCode=$plusCode")
     }
+
+    fun saveLocation(view: View) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Toast.makeText(this, "Bitte zuerst einloggen", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val loc = lastLocation
+        val plusCode = lastPlusCode
+
+        if (loc == null || plusCode == null) {
+            Toast.makeText(this, "Kein Standort verfügbar. Bitte zuerst Standort aktualisieren.", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val data = hashMapOf(
+            "userId" to user.uid,
+            "latitude" to loc.latitude,
+            "longitude" to loc.longitude,
+            "plusCode" to plusCode,
+            "timestamp" to Date(loc.time)
+        )
+
+        db.collection("locations")
+            .add(data)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Standort gespeichert", Toast.LENGTH_SHORT).show()
+                Log.d("LOC", "Location saved with id=${it.id}")
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Fehler beim Speichern: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+                Log.e("LOC", "Error saving location", e)
+            }
+    }
+
 }
