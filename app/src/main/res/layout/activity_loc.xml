@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LocationActivity">
+
+    <!-- Topbar -->
+    <View
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#D3D3D3"
+        android:layout_alignParentTop="true" />
+
+    <!-- Zurück -->
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@id/topBar"
+        android:layout_alignStart="@id/topBar"
+        android:src="@drawable/back_icon"
+        android:onClick="back_main"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Titel -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Standort"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_alignTop="@id/topBar" />
+
+    <!-- Werte -->
+    <LinearLayout
+        android:id="@+id/valuePanel"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar"
+        android:layout_marginTop="24dp"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Standort: —"
+            android:textSize="20sp"
+            android:paddingTop="6dp" />
+
+        <TextView
+            android:id="@+id/tvLat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Breite: —"
+            android:textSize="20sp"
+            android:paddingTop="6dp" />
+
+        <TextView
+            android:id="@+id/tvLon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Länge: —"
+            android:textSize="20sp"
+            android:paddingTop="6dp" />
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zeit: —"
+            android:textSize="18sp"
+            android:paddingTop="6dp" />
+    </LinearLayout>
+
+</RelativeLayout>

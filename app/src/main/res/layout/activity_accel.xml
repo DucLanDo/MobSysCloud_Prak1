@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccelerometerActivity">
+
+    <!-- Grauer Balken -->
+    <View
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#D3D3D3"
+        android:layout_alignParentTop="true"/>
+
+    <!-- Zurück -->
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@id/topBar"
+        android:layout_alignStart="@id/topBar"
+        android:src="@drawable/back_icon"
+        android:onClick="back_main"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Titel -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Beschleunigung"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:layout_alignTop="@id/topBar"/>
+
+    <!-- DIAGRAMM (AAChartCore), initial unsichtbar -->
+    <com.github.aachartmodel.aainfographics.aachartcreator.AAChartView
+        android:id="@+id/aaChartView"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_below="@id/topBar"
+        android:layout_marginTop="12dp"
+        android:layout_above="@id/switchViewButton"
+        android:visibility="gone" />
+
+    <!-- Werte-Panel -->
+    <LinearLayout
+        android:id="@+id/valuePanel"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topBar"
+        android:layout_marginTop="24dp"
+        android:layout_above="@id/switchViewButton"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X: —"
+            android:textSize="22sp"
+            android:paddingTop="8dp"/>
+
+        <TextView
+            android:id="@+id/tvY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Y: —"
+            android:textSize="22sp"
+            android:paddingTop="8dp"/>
+
+        <TextView
+            android:id="@+id/tvZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Z: —"
+            android:textSize="22sp"
+            android:paddingTop="8dp"/>
+    </LinearLayout>
+
+    <!-- Umschalt-Button -->
+    <Button
+        android:id="@+id/switchViewButton"
+        android:layout_width="200dp"
+        android:layout_height="63dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="Ansicht wechseln"
+        android:onClick="switchView"/>
+
+</RelativeLayout>

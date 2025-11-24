@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="ExtraText">
+
+    <!-- Grauer Balken -->
+    <View
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#D3D3D3"
+        android:layout_alignParentTop="true"/>
+
+
+    <!-- Activity Title -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Sensorik Demo"
+        android:textStyle="bold"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:layout_alignTop="@id/topBar"/>
+
+
+    <!-- Buttons-Start -->
+    <ImageView
+        android:id="@+id/butt_accel"
+        android:layout_width="350dp"
+        android:layout_height="166dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/topBar"
+        android:src="@drawable/button_accel"
+        android:layout_marginTop="30dp"
+        android:onClick="openAccelerometer"/>
+
+
+
+    <ImageView
+        android:id="@+id/butt_temp"
+        android:layout_width="350dp"
+        android:layout_height="166dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/butt_accel"
+        android:src="@drawable/button_temp"
+        android:layout_marginTop="30dp"
+        android:onClick="openTemperature"/>
+
+    <ImageView
+        android:id="@+id/butt_loc"
+        android:layout_width="350dp"
+        android:layout_height="166dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/butt_temp"
+        android:src="@drawable/button_loc"
+        android:layout_marginTop="30dp"
+        android:onClick="openLocation"/>
+    <!-- Buttons-Ende -->
+
+</RelativeLayout>
