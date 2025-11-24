@@ -75,10 +75,44 @@
         android:id="@+id/switchViewButton"
         android:layout_width="200dp"
         android:layout_height="63dp"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/bottomButtonBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:text="Ansicht wechseln"
         android:onClick="switchView"/>
+
+    <LinearLayout
+        android:id="@+id/bottomButtonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp">
+
+        <Button
+            android:id="@+id/btnTempHistory"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Verlauf anzeigen"
+            android:onClick="openTempHistory" />
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btnSaveTemp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Temperatur speichern"
+            android:onClick="saveTemperature" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

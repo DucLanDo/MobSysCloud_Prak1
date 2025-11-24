@@ -20,6 +20,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".LocationHistoryActivity" />
         <activity android:name=".AccelHistoryActivity" />
+        <activity android:name=".TempHistoryActivity" />
 
 
         <activity
