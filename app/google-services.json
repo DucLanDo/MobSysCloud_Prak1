@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "920521818334",
+    "project_id": "mobsyscloudprak",
+    "storage_bucket": "mobsyscloudprak.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920521818334:android:e7e272eb02970e63e3024f",
+        "android_client_info": {
+          "package_name": "de.hsas.inf.gui.mobsyscloud_prak1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA78B3OszsP_NsiTq-YVx3bI1CU7y957bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
