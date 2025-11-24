@@ -25,6 +25,12 @@ import com.github.aachartmodel.aainfographics.aachartcreator.AASeriesElement
 import java.util.Locale
 import kotlin.math.abs
 import android.util.Log
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
+import android.content.Intent
+
 
 class TemperatureActivity : AppCompatActivity(), SensorEventListener {
 
@@ -54,6 +60,11 @@ class TemperatureActivity : AppCompatActivity(), SensorEventListener {
     private val MIN_INTERVAL_MS = 60_000L // 1 Minute
 
     private val TAG = "TEMP" // für logging
+    // firebase instanz
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    private var lastTempC: Float? = null
+    private var lastTempTime: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +119,9 @@ class TemperatureActivity : AppCompatActivity(), SensorEventListener {
     // UI + Chart
     private fun updateTemperature(tempC: Float) {
         if (!tempC.isFinite() || abs(tempC) > 1000f) return
+
+        lastTempC = tempC
+        lastTempTime = System.currentTimeMillis()
 
 
         Log.d(TAG, "updateTemperature: UI-Text aktualisieren -> %.1f °C".format(tempC))
@@ -215,4 +229,43 @@ class TemperatureActivity : AppCompatActivity(), SensorEventListener {
 
     // Back-Button
     fun back_main(view: View) = finish()
+
+    fun saveTemperature(view: View) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Toast.makeText(this, "Bitte zuerst einloggen", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val temp = lastTempC
+        if (temp == null || lastTempTime == 0L) {
+            Toast.makeText(this, "Noch keine Temperaturmessung vorhanden.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val data = hashMapOf(
+            "userId" to user.uid,
+            "temperature" to temp,
+            "timestamp" to Date(lastTempTime)
+        )
+
+        db.collection("temperatures")
+            .add(data)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Temperatur gespeichert", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(
+                    this,
+                    "Fehler beim Speichern: ${e.localizedMessage}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+    }
+
+    fun openTempHistory(view: View) {
+        val intent = Intent(this, TempHistoryActivity::class.java)
+        startActivity(intent)
+    }
+
 }

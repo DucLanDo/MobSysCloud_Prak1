@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TempHistoryActivity">
+
+    <!-- Topbar -->
+    <View
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#D3D3D3"
+        android:layout_alignParentTop="true" />
+
+    <!-- Zurück -->
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@id/topBar"
+        android:layout_alignStart="@id/topBar"
+        android:src="@drawable/back_icon"
+        android:onClick="back_main"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Titel -->
+    <TextView
+        android:id="@+id/tvHistoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temperatur-Verlauf"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/topBar"
+        android:layout_marginTop="20dp" />
+
+    <!-- Liste -->
+    <ListView
+        android:id="@+id/lvTemps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:padding="16dp" />
+
+    <!-- Text falls leer -->
+    <TextView
+        android:id="@+id/tvEmptyTemps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Noch keine Temperaturdaten gespeichert."
+        android:gravity="center"
+        android:layout_below="@id/topBar"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+</RelativeLayout>
