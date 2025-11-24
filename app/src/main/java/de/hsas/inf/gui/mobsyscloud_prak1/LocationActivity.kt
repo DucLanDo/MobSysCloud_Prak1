@@ -18,6 +18,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
+import android.content.Intent
+
 
 class LocationActivity : AppCompatActivity() {
 
@@ -168,6 +170,10 @@ class LocationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Fehler beim Speichern: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
                 Log.e("LOC", "Error saving location", e)
             }
+    }
+    fun openLocationHistory(view: View) {
+        val intent = Intent(this, LocationHistoryActivity::class.java)
+        startActivity(intent)
     }
 
 }

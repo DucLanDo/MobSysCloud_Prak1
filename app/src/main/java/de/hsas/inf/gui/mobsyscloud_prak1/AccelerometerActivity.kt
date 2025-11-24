@@ -3,6 +3,7 @@ package de.hsas.inf.gui.mobsyscloud_prak1
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -20,6 +21,12 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import kotlin.math.abs
 import android.util.Log
+
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Date
+import kotlin.math.abs
 
 
 // AAChartCore-Kotlin
@@ -63,6 +70,10 @@ class AccelerometerActivity : AppCompatActivity(), SensorEventListener { //bekom
     private val NOTIFY_ID = 1010
 
     private val TAG = "ACCEL" // für logging
+    //firebasestore instanz
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    private var lastAccelTime: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,6 +168,8 @@ class AccelerometerActivity : AppCompatActivity(), SensorEventListener { //bekom
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type != Sensor.TYPE_ACCELEROMETER) return
 
+        lastAccelTime = System.currentTimeMillis()
+
         val x = event.values[0]
         val y = event.values[1]
         val z = event.values[2]
@@ -239,5 +252,46 @@ class AccelerometerActivity : AppCompatActivity(), SensorEventListener { //bekom
 
         NotificationManagerCompat.from(this).notify(NOTIFY_ID, n)
         Log.i(TAG, "Notification gesendet (id=$NOTIFY_ID)")
+    }
+    //speichert daten in firebase
+    fun saveAcceleration(view: View) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user == null) {
+            Toast.makeText(this, "Bitte zuerst einloggen", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Aktuelle gefilterte Werte (fx, fy, fz)
+        val x = fx
+        val y = fy
+        val z = fz
+
+
+        if (lastAccelTime == 0L) {
+            Toast.makeText(this, "Noch keine Messung vorhanden.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val data = hashMapOf(
+            "userId" to user.uid,
+            "x" to x,
+            "y" to y,
+            "z" to z,
+            "timestamp" to Date(lastAccelTime)
+        )
+
+        db.collection("accelerations")
+            .add(data)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Beschleunigung gespeichert", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Fehler beim Speichern: ${e.localizedMessage}", Toast.LENGTH_LONG).show()
+            }
+    }
+
+    fun openAccelHistory(view: View) {
+        val intent = Intent(this, AccelHistoryActivity::class.java)
+        startActivity(intent)
     }
 }

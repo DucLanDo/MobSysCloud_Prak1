@@ -82,14 +82,37 @@
             android:paddingTop="6dp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSaveLocation"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/bottomButtonBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Standort speichern"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:layout_marginBottom="24dp"
-        android:onClick="saveLocation" />
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp">
+
+        <Button
+            android:id="@+id/btnLocationHistory"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Verlauf anzeigen"
+            android:onClick="openLocationHistory" />
+
+        <View
+            android:layout_width="16dp"
+            android:layout_height="0dp" />
+
+        <Button
+            android:id="@+id/btnSaveLocation"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Standort speichern"
+            android:onClick="saveLocation" />
+
+    </LinearLayout>
 
 </RelativeLayout>

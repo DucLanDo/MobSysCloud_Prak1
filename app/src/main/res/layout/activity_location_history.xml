@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LocationHistoryActivity">
+
+    <!-- Topbar -->
+    <View
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#D3D3D3"
+        android:layout_alignParentTop="true" />
+
+    <!-- Back Arrow -->
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@id/topBar"
+        android:layout_alignStart="@id/topBar"
+        android:src="@drawable/back_icon"
+        android:onClick="back_main"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <!-- Titel in der TopBar -->
+    <TextView
+        android:id="@+id/tvHistoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gespeicherte Standorte"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/topBar"
+        android:layout_marginTop="20dp" />
+
+    <!-- ListView für gespeicherte Locations -->
+    <ListView
+        android:id="@+id/lvLocations"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topBar"
+        android:padding="16dp" />
+
+    <!-- Text falls leer -->
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Noch keine Standorte gespeichert."
+        android:gravity="center"
+        android:layout_below="@id/topBar"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:textStyle="italic" />
+
+</RelativeLayout>

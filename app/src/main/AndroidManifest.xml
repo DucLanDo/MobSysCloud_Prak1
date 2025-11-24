@@ -18,6 +18,9 @@
         <activity android:name=".TemperatureActivity" />
         <activity android:name=".LocationActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".LocationHistoryActivity" />
+        <activity android:name=".AccelHistoryActivity" />
+
 
         <activity
             android:name=".MainActivity"
