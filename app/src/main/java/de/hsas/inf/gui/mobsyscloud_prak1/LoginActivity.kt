@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import android.util.Log
 
 class LoginActivity : AppCompatActivity() {
 
@@ -21,6 +23,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: Button
     private lateinit var progress: ProgressBar
+    //firestore instanz
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,8 +93,29 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 setLoading(false)
                 if (task.isSuccessful) {
+
+                    val user = auth.currentUser
+                    if (user != null) {
+                        // User-Dokument erstellen
+                        val userData = hashMapOf(
+                            "email" to user.email,
+                            "createdAt" to com.google.firebase.Timestamp.now()
+                        )
+
+                        db.collection("users")
+                            .document(user.uid)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                Log.d("AUTH", "User document created for ${user.uid}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("AUTH", "Error creating user document", e)
+                            }
+                    }
+
                     Toast.makeText(this, "Registrierung erfolgreich", Toast.LENGTH_SHORT).show()
                     goToMain()
+
                 } else {
                     Toast.makeText(
                         this,
