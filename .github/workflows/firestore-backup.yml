@@ -22,9 +22,16 @@ jobs:
         run: npm ci
         working-directory: functions
 
-      - name: Run Firestore backup
+      - name: Write service account key
+        run: |
+          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > /home/runner/service-account.json
+
+      - name: Run Firestore backup (Cloud)
         run: npx ts-node scripts/firestore-backup.ts
         working-directory: functions
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /home/runner/service-account.json
+          GCLOUD_PROJECT: mobsyscloudprak
 
       - name: Upload backup files
         uses: actions/upload-artifact@v4

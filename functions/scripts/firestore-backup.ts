@@ -1,8 +1,11 @@
 import admin from "firebase-admin";
 import fs from "fs";
 
+const projectId = process.env.GCLOUD_PROJECT || "mobsyscloudprak";
+
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
+  projectId,
 });
 
 const db = admin.firestore();
