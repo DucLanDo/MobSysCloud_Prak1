@@ -43,7 +43,7 @@ export const getServerStatus = functions.https.onRequest((req, res) => {
 export const getUsers = functions.https.onRequest(async (req, res) => {
   try {
     const db = admin.firestore();
-    const snapshot = await db.collection("users").limit(50).get(); 
+    const snapshot = await db.collection("users").limit(50).get();
 
     const users = snapshot.docs.map((doc) => ({
       id: doc.id,
